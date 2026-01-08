@@ -54,7 +54,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF2F2F6),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
@@ -77,7 +77,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
             children: [
               TextFormField(
                 controller: titleCtrl,
-                decoration: const InputDecoration(labelText: "Title"),
+                decoration: _inputDecoration("Title"),
                 validator: (v) =>
                     (v == null || v.trim().isEmpty) ? "Title required" : null,
               ),
@@ -85,15 +85,36 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
               Expanded(
                 child: TextFormField(
                   controller: descCtrl,
-                  decoration: const InputDecoration(labelText: "Description"),
-                  expands: true,
-                  maxLines: null,
+                  decoration: _inputDecoration("Description"),
+                  // expands: true,
+                  maxLines: 5,
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  InputDecoration _inputDecoration(String label) {
+    return InputDecoration(
+      labelText: label,
+      filled: true,
+      fillColor: const Color(0xFFF2F2F6),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Colors.grey),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Colors.grey),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Colors.teal, width: 2),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     );
   }
 }

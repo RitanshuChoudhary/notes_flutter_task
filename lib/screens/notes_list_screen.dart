@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/widgets/notes_tile.dart';
 import 'package:provider/provider.dart';
 import '../providers/note_provider.dart';
 import 'note_editor_screen.dart';
@@ -12,7 +13,7 @@ class NotesListScreen extends StatelessWidget {
     final notes = provider.notes;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF2F2F6),
       appBar: AppBar(
         title: const Text('Notes', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.teal,
@@ -23,38 +24,18 @@ class NotesListScreen extends StatelessWidget {
               itemCount: notes.length,
               itemBuilder: (context, index) {
                 final note = notes[index];
-                return Dismissible(
-                  key: ValueKey(note.title + index.toString()),
-                  background: Container(color: Colors.red),
-                  onDismissed: (_) => provider.delete(index),
-                  child: ListTile(
-                    title: Text(note.title),
-                    subtitle: Text(
-                      note.description.length > 40
-                          ? note.description.substring(0, 40)
-                          : note.description,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              NoteEditorScreen(note: note, index: index),
-                        ),
-                      );
-                    },
-                  ),
-                );
+                return NotesTile(note: note, index: index);
               },
             ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.teal,
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const NoteEditorScreen()),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
